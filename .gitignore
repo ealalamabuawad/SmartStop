@@ -1,0 +1,16 @@
+# Python
+backend/venv/
+backend/.env
+.env
+__pycache__/
+*.pyc
+
+# Node / Vue
+smartstop-front/node_modules/
+smartstop-front/dist/
+smartstop-front/.env.local
+smartstop-front/.env.*.local
+
+# IDEs
+.vscode/
+.idea/
