@@ -84,7 +84,7 @@ async def login(credenciales: UsuarioLogin):
     if not usuario_db:
         raise HTTPException(status_code=401, detail="Credenciales incorrectas")
         
-    hash_guardado = usuario_db.get('EntidadDatos_JSON', {}).get('hash', '')
+    hash_guardado = usuario_db.get('EntidadDatos_JSON', {}).get('hash', '') # type: ignore
     
     if not verificar_contrasena(credenciales.contrasena, hash_guardado):
         raise HTTPException(status_code=401, detail="Credenciales incorrectas")
@@ -105,8 +105,8 @@ async def reestablecer_contrasena(correo: str, background_tasks: BackgroundTasks
     nueva_contrasena = str(uuid.uuid4())[:8]
     nuevo_hash = obtener_hash_contrasena(nueva_contrasena)
     
-    entidad_datos = usuario_db.get('EntidadDatos_JSON', {})
-    entidad_datos['hash'] = nuevo_hash
+    entidad_datos = usuario_db.get('EntidadDatos_JSON', {})  
+    entidad_datos['hash'] = nuevo_hash # type: ignore
     
     tabla_smartstop.update_item(
         Key={
