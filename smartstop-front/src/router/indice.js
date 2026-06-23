@@ -1,7 +1,8 @@
-import { createRouter, createWebHistory } from "vue-router";
-import Busqueda from "../views/Busqueda.vue";
-import Ingreso from "../views/Ingreso.vue";
-import ValidadorMaleta from "../components/ValidadorMaleta.vue";
+import { createRouter, createWebHistory } from 'vue-router'
+import Busqueda from '../views/Busqueda.vue'
+import Ingreso from '../views/Ingreso.vue'
+import Registro from '../views/Registro.vue'
+import Resultados from '../views/Resultados.vue'
 
 const routes = [
   {
@@ -10,20 +11,34 @@ const routes = [
     component: Busqueda,
   },
   {
-    path: "/ingreso",
-    name: "Ingreso",
-    component: Ingreso,
+    path: '/ingreso',
+    name: 'Ingreso',
+    component: Ingreso
   },
   {
-    path: "/validador",
-    name: "Validador",
-    component: ValidadorMaleta,
+    path: '/registro',
+    name: 'Registro',
+    component: Registro
   },
-];
+  {
+    path: '/resultados',
+    name: 'Resultados',
+    component: Resultados
+  }
+]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
-});
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+      }
+    }
+    return { top: 0 }
+  }
+})
 
-export default router;
+export default router
