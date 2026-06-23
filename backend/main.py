@@ -48,16 +48,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/", tags=["Estado del Sistema"])
-async def raiz():
-    return {
-        "estado": "operativo", 
-        "proyecto": config.NOMBRE_PROYECTO
-    }
-
 app.include_router(auth.router)
 app.include_router(buscador.router)
 app.include_router(perfil.router)
 app.include_router(reglas.router)
 app.include_router(alertas.router)
 app.include_router(itinerarios.router)
+
+@app.get("/", tags=["Estado del Sistema"])
+async def raiz():
+    return {
+        "estado": "operativo", 
+        "proyecto": config.NOMBRE_PROYECTO
+}
