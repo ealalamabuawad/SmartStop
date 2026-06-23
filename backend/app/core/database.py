@@ -11,10 +11,11 @@ os.environ["HTTP_PROXY"] = ""
 os.environ["HTTPS_PROXY"] = ""
 os.environ["NO_PROXY"] = "127.0.0.1,localhost"
 
+print(f"Connecting to DynamoDB Local at {config.DYNAMODB_ENDPOINT}...")
+
 session = boto3.Session(
     aws_access_key_id=config.AWS_ACCESS_KEY_ID,
     aws_secret_access_key=config.AWS_SECRET_ACCESS_KEY,
-    aws_session_token=None,
     region_name=config.AWS_REGION
 )
 

@@ -1,27 +1,35 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional
+from pydantic import BaseModel, EmailStr, Field
+from typing import List, Optional
+from enum import Enum
 
-class UsuarioBase(BaseModel):
+class RolSistema(str, Enum):
+    VIAJERO_COMUN = "Viajero_Comun"
+    VIAJERO_PREMIUM = "Viajero_Premium"
+    ADMINISTRADOR = "Administrador"
+
+class EventoAuditoria(BaseModel):
+    accion: str
+    fecha: str
+    ip: Optional[str] = None
+
+class DatosUsuario(BaseModel):
     nombre: str
-    correo: EmailStr
-    telefono: Optional[str] = None
-    pais: Optional[str] = None
-    region: Optional[str] = None
+    telefono: str
+    pais: str
+    region: str
+    hash: str
 
-class UsuarioCrear(UsuarioBase):
-    contrasena: str
-
-class UsuarioRespuesta(UsuarioBase):
-    rol: str
+class SuscripcionInfo(BaseModel):
     estado: str
+    renovacion: str
+    metodo: str
 
-    class Config:
-        from_attributes = True
-
-class UsuarioLogin(BaseModel):
-    correo: EmailStr
-    contrasena: str
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
+class UsuarioDB(BaseModel):
+    PK: str = Field(..., examples=["USUARIO#101"])
+    CO: str = Field("PERFIL")
+    GSI1_Correo: EmailStr
+    RolSistema: RolSistema
+    EntidadDatos_JSON: DatosUsuario
+    Suscripcion_JSON: Optional[SuscripcionInfo] = None
+    Auditoria_JSON: List[EventoAuditoria] = []
+    TTL: Optional[int] = None
