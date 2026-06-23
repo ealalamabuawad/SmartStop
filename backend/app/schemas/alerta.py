@@ -1,13 +1,13 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 
-class AnalisisEquipaje(BaseModel):
-    cumple_normativa: bool
-    sobrepeso_kg: float = 0.0
-    exceso_dimensiones: bool = False
-    
-class AlertaMulta(BaseModel):
-    estatus: str
-    mensaje_preventivo: str
-    multa_estimada_clp: float
-    analisis_tecnico: AnalisisEquipaje
+class SuscripcionInfo(BaseModel):
+    estado: str
+    renovacion: str
+    metodo: str
+
+class AlertaPremiumBase(BaseModel):
+    id_usuario: str
+    mensaje: str
+    fecha_envio: str
+    tipo_notificacion: str  # push, email
