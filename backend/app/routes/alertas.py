@@ -18,7 +18,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 def obtener_pk_usuario_actual(token: str = Depends(oauth2_scheme)) -> str:
     try:
         payload = jwt.decode(token, config.CLAVE_SECRETA_JWT, algorithms=[config.ALGORITMO_JWT])
-        return payload.get("sub")
+        sub = payload.get("sub")
+        if not isinstance(sub, str):
+            raise HTTPException(status_code=401, detail="Token inválido: sujeto no válido")
+        return sub
     except PyJWTError:
         raise HTTPException(status_code=401, detail="Token inválido o expirado")
 
@@ -27,7 +30,10 @@ def verificar_admin(token: str = Depends(oauth2_scheme)) -> str:
         payload = jwt.decode(token, config.CLAVE_SECRETA_JWT, algorithms=[config.ALGORITMO_JWT])
         if payload.get("rol") != "Administrador":
             raise HTTPException(status_code=403, detail="Acceso denegado: Se requieren privilegios de Administrador")
-        return payload.get("sub")
+        sub = payload.get("sub")
+        if not isinstance(sub, str):
+            raise HTTPException(status_code=401, detail="Token inválido: sujeto no válido")
+        return sub
     except PyJWTError:
         raise HTTPException(status_code=401, detail="Token inválido o expirado")
 

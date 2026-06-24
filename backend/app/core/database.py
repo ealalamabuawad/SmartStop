@@ -25,4 +25,4 @@ dynamodb = session.resource(
     config=Config(signature_version='v4')
 )
 
-tabla_smartstop = dynamodb.Table(config.DYNAMODB_TABLA)
+tabla_smartstop = dynamodb.Table(config.DYNAMODB_TABLA)  # type: ignore[attr-defined]

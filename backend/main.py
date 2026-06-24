@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.configuracion import config
 from app.routes import auth, buscador, perfil, reglas, alertas, itinerarios
+from app.routes import equipaje#, vuelos , auth
 
 tags_metadata = [
     {
@@ -30,8 +31,6 @@ tags_metadata = [
         "description": "Almacenamiento de rutas offline y exportación nativa a calendarios (.ics)."
     }
 ]
-
-from app.routes import equipaje, vuelos #, auth
 
 app = FastAPI(
     title=config.NOMBRE_PROYECTO,

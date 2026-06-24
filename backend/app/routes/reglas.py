@@ -25,7 +25,13 @@ def verificar_admin(token: str = Depends(oauth2_scheme)) -> str:
                 status_code=status.HTTP_403_FORBIDDEN, 
                 detail="Acceso denegado: Se requieren privilegios de Administrador"
             )
-        return payload.get("sub")
+        sub = payload.get("sub")
+        if not isinstance(sub, str):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token inválido: sub inválido o ausente"
+            )
+        return sub
     except PyJWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, 
